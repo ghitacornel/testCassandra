@@ -1,0 +1,31 @@
+version: '3.6'
+
+#https://www.baeldung.com/cassandra-with-java
+
+services:
+
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
+    environment:
+      - CASSANDRA_SEEDS=cassandra
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_PASSWORD=cassandra
+      - CASSANDRA_TRANSPORT_PORT_NUMBER=7000
+    ports:
+      - 7000:7000 #Internode communication (not used if TLS enabled)
+      - 7001:7001 #TLS Internode communication (used if TLS enabled)
+      - 9160:9160 #Thrift client API
+      - 9042:9042 #CQL native transport port
+      - 7199:7199 #JMX
+    networks:
+      - cassandra_network
+    volumes:
+      - cassandra:/data/cassandra
+
+networks:
+  cassandra_network:
+    driver: bridge
+
+volumes:
+  cassandra:
