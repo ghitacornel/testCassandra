@@ -12,7 +12,7 @@ public class TestKeySpaceRepository extends TestsSetup {
 
     @Test
     public void whenCreatingAKeyspace_thenCreated() {
-        schemaRepository.createKeyspace(KEYSPACE_NAME, "SimpleStrategy", 1);
+        keySpaceRepository.createKeyspace(KEYSPACE_NAME, "SimpleStrategy", 1);
 
         ResultSet result = session.execute("SELECT * FROM system_schema.keyspaces;");
 
