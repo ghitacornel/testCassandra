@@ -1,8 +1,10 @@
 package tests;
 
+import cassandra.model.Book;
 import cassandra.repository.BookRepository;
 import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.utils.UUIDs;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +50,29 @@ public class BookRepositoryStructureTest extends TestsSetup {
                 anyMatch(cl -> cl.getName().equals("publisher"));
 
         Assert.assertTrue(columnExists);
+    }
+
+    @Test
+    public void whenSelectingAll_thenReturnAllRecords() {
+
+        {
+            Book book = new Book(UUIDs.timeBased(), "Effective Java", "Programming");
+            repository.insert(book);
+
+            List<Book> books = repository.selectByTitle("Effective Java");
+            Assert.assertTrue(books.stream().anyMatch(b -> b.getTitle().equals("Effective Java")));
+        }
+
+        {
+            Book book = new Book(UUIDs.timeBased(), "Clean Code", "Programming");
+            repository.insert(book);
+
+            List<Book> books = repository.selectAll();
+
+            Assert.assertEquals(2, books.size());
+            Assert.assertTrue(books.stream().anyMatch(b -> b.getTitle().equals("Effective Java")));
+            Assert.assertTrue(books.stream().anyMatch(b -> b.getTitle().equals("Clean Code")));
+        }
     }
 
 }
