@@ -13,7 +13,7 @@ import java.util.List;
 
 import static cassandra.repository.KeySpaceRepository.KEYSPACE_NAME;
 
-public class BookRepositoryStructureTest extends TestsSetup {
+public class BookRepositoryTest extends TestsSetup {
 
     private final BookRepository repository = new BookRepository(session);
 
@@ -24,7 +24,7 @@ public class BookRepositoryStructureTest extends TestsSetup {
     }
 
     @Test
-    public void whenCreatingATable_thenCreatedCorrectly() {
+    public void create() {
 
         ResultSet result = session.execute("SELECT * FROM " + KEYSPACE_NAME + ".books;");
 
@@ -40,7 +40,7 @@ public class BookRepositoryStructureTest extends TestsSetup {
     }
 
     @Test
-    public void whenAlteringTable_thenAddedColumnExists() {
+    public void alter() {
 
         repository.alterTable("publisher", "text");
 
@@ -53,7 +53,7 @@ public class BookRepositoryStructureTest extends TestsSetup {
     }
 
     @Test
-    public void whenSelectingAll_thenReturnAllRecords() {
+    public void crud() {
 
         {
             Book book = new Book(UUIDs.timeBased(), "Effective Java", "Programming");
@@ -73,6 +73,7 @@ public class BookRepositoryStructureTest extends TestsSetup {
             Assert.assertTrue(books.stream().anyMatch(b -> b.getTitle().equals("Effective Java")));
             Assert.assertTrue(books.stream().anyMatch(b -> b.getTitle().equals("Clean Code")));
         }
+
     }
 
 }
