@@ -30,7 +30,7 @@ public class TestBookRepository extends TestsSetup {
         List<String> columnNames =
                 result.getColumnDefinitions().asList().stream()
                         .map(ColumnDefinitions.Definition::getName)
-                        .collect(Collectors.toList());
+                        .toList();
 
         Assert.assertEquals(columnNames.size(), 3);
         Assert.assertTrue(columnNames.contains("id"));

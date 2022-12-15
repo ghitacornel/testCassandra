@@ -20,7 +20,7 @@ public class TestKeySpaceRepository extends TestsSetup {
                 .stream()
                 .filter(r -> r.getString(0).equals(KEYSPACE_NAME.toLowerCase()))
                 .map(r -> r.getString(0))
-                .collect(Collectors.toList());
+                .toList();
 
         Assert.assertEquals(matchedKeyspaces.size(), 1);
         Assert.assertEquals(matchedKeyspaces.get(0), KEYSPACE_NAME.toLowerCase());
