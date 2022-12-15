@@ -1,9 +1,11 @@
 package cassandra.repository;
 
 import cassandra.model.Book;
+import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 
 import java.util.List;
+import java.util.UUID;
 
 import static cassandra.repository.KeySpaceRepository.KEYSPACE_NAME;
 
@@ -36,14 +38,18 @@ public class BookRepository {
     }
 
     public void insert(Book book) {
-        String query = "INSERT INTO " +
+        session.execute("INSERT INTO " +
                 TABLE_NAME + "(id, title, subject) " +
                 "VALUES ("
-                + book.getId()
-                + ", '" + book.getTitle() + "'"
-                + ", '" + book.getSubject() + "'"
-                + ")";
-        session.execute(query);
+                + book.getId() + ","
+                + "'" + book.getTitle() + "'" + ","
+                + "'" + book.getSubject() + "'"
+                + ")");
+    }
+
+    public Book findById(UUID id) {
+        Row row = session.execute("SELECT * FROM " + TABLE_NAME + " WHERE id = ?", id).one();
+        return row == null ? null : new Book(row.getUUID("id"), row.getString("title"), row.getString("subject"));
     }
 
     public List<Book> selectAll() {
@@ -51,7 +57,6 @@ public class BookRepository {
                 .all().stream()
                 .map(row -> new Book(row.getUUID("id"), row.getString("title"), row.getString("subject")))
                 .toList();
-
     }
 
     public List<Book> selectByTitle(String title) {
@@ -61,4 +66,23 @@ public class BookRepository {
                 .toList();
     }
 
+    public void deleteById(UUID id) {
+        session.execute("DELETE FROM " + TABLE_NAME + " WHERE id = ?", id);
+    }
+
+    public void deleteAll() {
+        session.execute("TRUNCATE " + TABLE_NAME);
+    }
+
+    public void deleteFieldSubject(UUID id) {
+        session.execute("DELETE subject FROM " + TABLE_NAME + " WHERE id = ?", id);
+    }
+
+    public long countAll() {
+        return session.execute("SELECT COUNT(*) as count FROM " + TABLE_NAME).one().getLong("count");
+    }
+
+    public void updateFieldSubject(UUID id, String subject) {
+        session.execute("UPDATE " + TABLE_NAME + " SET subject = ? " + " WHERE id = ?", subject, id);
+    }
 }
