@@ -3,12 +3,12 @@ package tests;
 import cassandra.repository.BookRepository;
 import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.ResultSet;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static cassandra.repository.KeySpaceRepository.KEYSPACE_NAME;
 
@@ -17,7 +17,13 @@ public class TestBookRepository extends TestsSetup {
     private final BookRepository repository = new BookRepository(session);
 
     @Before
-    public void dropTable() {
+    public void setup() {
+        repository.dropTable();
+        repository.createTable();
+    }
+
+    @After
+    public void teardown() {
         repository.dropTable();
     }
 

@@ -6,7 +6,7 @@ import static cassandra.repository.KeySpaceRepository.KEYSPACE_NAME;
 
 public class BookRepository {
 
-    public static final String TABLE_NAME = KEYSPACE_NAME + "." + "books";
+    private static final String TABLE_NAME = KEYSPACE_NAME + "." + "books";
 
     final private Session session;
 
