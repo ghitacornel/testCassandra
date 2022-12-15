@@ -12,7 +12,7 @@ import java.util.List;
 
 import static cassandra.repository.KeySpaceRepository.KEYSPACE_NAME;
 
-public class BookRepositoryTest extends TestsSetup {
+public class BookRepositoryStructureTest extends TestsSetup {
 
     private final BookRepository repository = new BookRepository(session);
 
@@ -29,7 +29,6 @@ public class BookRepositoryTest extends TestsSetup {
 
     @Test
     public void whenCreatingATable_thenCreatedCorrectly() {
-        repository.createTable();
 
         ResultSet result = session.execute("SELECT * FROM " + KEYSPACE_NAME + ".books;");
 
@@ -46,7 +45,7 @@ public class BookRepositoryTest extends TestsSetup {
 
     @Test
     public void whenAlteringTable_thenAddedColumnExists() {
-        repository.createTable();
+
         repository.alterTable("publisher", "text");
 
         ResultSet result = session.execute("SELECT * FROM " + KEYSPACE_NAME + "." + "books" + ";");
