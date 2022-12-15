@@ -12,7 +12,7 @@ import java.util.List;
 
 import static cassandra.repository.KeySpaceRepository.KEYSPACE_NAME;
 
-public class TestBookRepository extends TestsSetup {
+public class BookRepositoryTest extends TestsSetup {
 
     private final BookRepository repository = new BookRepository(session);
 
