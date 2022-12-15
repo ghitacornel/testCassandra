@@ -20,20 +20,19 @@ public class BookRepository {
     public void createTable() {
         String query = "CREATE TABLE IF NOT EXISTS " +
                 TABLE_NAME + "(" +
-                "id uuid PRIMARY KEY, " +
-                "title text," +
-                "subject text);";
+                "id uuid PRIMARY KEY" + "," +
+                "title text" + "," +
+                "subject text" +
+                ")";
         session.execute(query);
     }
 
     public void alterTable(String columnName, String columnType) {
-        String query = "ALTER TABLE " + TABLE_NAME + " ADD " + columnName + " " + columnType + ";";
-        session.execute(query);
+        session.execute("ALTER TABLE " + TABLE_NAME + " ADD " + columnName + " " + columnType);
     }
 
     public void dropTable() {
-        String query = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-        session.execute(query);
+        session.execute("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
     public void insert(Book book) {
@@ -43,12 +42,12 @@ public class BookRepository {
                 + book.getId()
                 + ", '" + book.getTitle() + "'"
                 + ", '" + book.getSubject() + "'"
-                + ");";
+                + ")";
         session.execute(query);
     }
 
     public List<Book> selectAll() {
-        return session.execute("SELECT * FROM " + TABLE_NAME + " ALLOW FILTERING")// need ALLOW FILTERING due to full scan
+        return session.execute("SELECT * FROM " + TABLE_NAME)
                 .all().stream()
                 .map(row -> new Book(row.getUUID("id"), row.getString("title"), row.getString("subject")))
                 .toList();
@@ -56,7 +55,7 @@ public class BookRepository {
     }
 
     public List<Book> selectByTitle(String title) {
-        return session.execute("SELECT * FROM " + TABLE_NAME + " WHERE title = ? ALLOW FILTERING", title)// need ALLOW FILTERING due to full scan
+        return session.execute("SELECT * FROM " + TABLE_NAME + " WHERE title = ? ALLOW FILTERING", title)// need ALLOW FILTERING due to field not part of the indexes
                 .all().stream()
                 .map(row -> new Book(row.getUUID("id"), row.getString("title"), row.getString("subject")))
                 .toList();
