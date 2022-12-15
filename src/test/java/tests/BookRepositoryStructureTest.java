@@ -3,7 +3,6 @@ package tests;
 import cassandra.repository.BookRepository;
 import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.ResultSet;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,11 +19,6 @@ public class BookRepositoryStructureTest extends TestsSetup {
     public void setup() {
         repository.dropTable();
         repository.createTable();
-    }
-
-    @After
-    public void teardown() {
-        repository.dropTable();
     }
 
     @Test
