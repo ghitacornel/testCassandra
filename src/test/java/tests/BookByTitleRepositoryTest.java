@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class TestBookByTitleRepository extends TestsSetup {
+public class BookByTitleRepositoryTest extends TestsSetup {
 
     private final BookByTitleRepository repository = new BookByTitleRepository(session);
 
