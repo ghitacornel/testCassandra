@@ -9,7 +9,7 @@ public class CassandraConnector {
     private Session session;
 
     public void connect() {
-        String node = "127.0.0.1";
+        String node = "localhost";
         int port = 9042;
         Cluster.Builder b = Cluster.builder().addContactPoint(node);
         b.withPort(port);
