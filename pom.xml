@@ -29,16 +29,11 @@
             <artifactId>cassandra-driver-core</artifactId>
             <version>4.0.0</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.datastax.cassandra</groupId>-->
-        <!--            <artifactId>cassandra-driver-core</artifactId>-->
-        <!--            <version>4.0.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.datastax.oss</groupId>-->
-        <!--            <artifactId>java-driver-query-builder</artifactId>-->
-        <!--            <version>4.15.0</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.datastax.oss</groupId>
+            <artifactId>java-driver-query-builder</artifactId>
+            <version>4.17.0</version>
+        </dependency>
 
         <!-- LOGGING -->
         <dependency>
@@ -61,4 +56,11 @@
         </dependency>
 
     </dependencies>
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
 </project>
