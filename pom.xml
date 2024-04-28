@@ -12,6 +12,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.source>21</maven.compiler.source>
+        <cassandra-driver-core.version>3.1.2</cassandra-driver-core.version>
+        <datastax-cassandra.version>4.17.0</datastax-cassandra.version>
     </properties>
 
     <dependencies>
@@ -23,17 +25,20 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- DRIVER -->
-        <!-- https://mvnrepository.com/artifact/com.datastax.oss/java-driver-core -->
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+            <version>${cassandra-driver-core.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.datastax.oss</groupId>
             <artifactId>java-driver-core</artifactId>
-            <version>4.17.0</version>
+            <version>${datastax-cassandra.version}</version>
         </dependency>
         <dependency>
             <groupId>com.datastax.oss</groupId>
             <artifactId>java-driver-query-builder</artifactId>
-            <version>4.17.0</version>
+            <version>${datastax-cassandra.version}</version>
         </dependency>
 
         <!-- LOGGING -->
